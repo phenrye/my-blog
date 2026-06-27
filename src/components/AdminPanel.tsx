@@ -48,10 +48,17 @@ export default function AdminPanel({
   }
 
   const refresh = useCallback(async () => {
-    const res = await fetch("/api/admin/articles");
-    if (res.ok) {
-      const data = await res.json();
-      setArticles(data);
+    try {
+      const res = await fetch("/api/admin/articles");
+      if (res.ok) {
+        const data = await res.json();
+        setArticles(data);
+      } else {
+        const err = await res.json().catch(() => ({}));
+        console.error("刷新文章列表失败:", res.status, err);
+      }
+    } catch (e) {
+      console.error("刷新文章列表网络错误:", e);
     }
   }, []);
 
