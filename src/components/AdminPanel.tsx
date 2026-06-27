@@ -48,7 +48,7 @@ export default function AdminPanel({
   }
 
   const refresh = useCallback(async () => {
-    const res = await fetch("/admin?json=1");
+    const res = await fetch("/api/admin/articles");
     if (res.ok) {
       const data = await res.json();
       setArticles(data);
